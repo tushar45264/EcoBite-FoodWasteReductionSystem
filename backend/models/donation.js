@@ -11,11 +11,11 @@ const DonationSchema = new mongoose.Schema({
         required: true
     },
     quantity: {
-        type: Number,
+        type: String,
         required: true
     },
     expirationDate: {
-        type: Date,
+        type: String,
         required: true
     },
     pickupLocation: {
@@ -26,9 +26,13 @@ const DonationSchema = new mongoose.Schema({
         type: String,
         enum: ['available', 'claimed', 'picked_up'],
         default: 'available'
+    },
+    image: {
+        type: String, 
+        required: false  
     }
 });
 
 const Donation = mongoose.model('Donation', DonationSchema);
 
-export default Donation 
+export default Donation;

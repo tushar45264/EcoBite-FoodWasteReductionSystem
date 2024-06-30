@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { LuLeaf, LuMenu } from 'react-icons/lu';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../Redux/userSlice';
+import { useNavigate,Link } from 'react-router-dom';
 
 const Header = () => {
+  const navigate=useNavigate();
+  const dispatch = useDispatch();;
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const user=useSelector(state=>state.user);
+  const handleSubmit=()=>{
+    localStorage.removeItem('user');
+    localStorage.removeItem('donation');
+    dispatch(logout(user));
+    navigate('/');
+  }
 
   const toggleSheet = () => {
     setIsSheetOpen(!isSheetOpen);
@@ -11,26 +23,21 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        <a href="#" className="flex items-center gap-2 font-semibold">
+        <a href="/" className="flex items-center gap-2 font-semibold">
           <LuLeaf className="h-6 w-6 text-green-500" />
           <span className="text-lg">EcoBite</span>
         </a>
-        <nav className="hidden gap-6 md:flex">
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Welcome
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Map
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Chat
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Testimonials
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Join Us
-          </a>
+        <nav className="hidden gap-6 items-center md:flex">
+          <p className="text-sm font-medium hover:underline underline-offset-4">
+          {user.user?  `Welcome ${user.user.name}`: "Welcome"}
+          </p>
+          {
+            user.user ? <button onClick={handleSubmit}  className="text-sm bg-green-500 hover:bg-green-400 rounded text-white py-2 px-2 font-medium underline-offset-4">
+            Logout
+          </button> :<Link to='/login' ><button className="text-sm bg-green-500 hover:bg-green-400 rounded text-white py-2 px-2 font-medium underline-offset-4">
+            Join Now
+          </button></Link>
+          }
         </nav>
         <button className="md:hidden" onClick={toggleSheet}>
           <LuMenu className="h-6 w-6" />

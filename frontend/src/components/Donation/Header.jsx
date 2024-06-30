@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        <a href="#" className="flex items-center gap-2 font-semibold">
+        <a href="/" className="flex items-center gap-2 font-semibold">
           <LuLeaf className="h-6 w-6 text-green-500" />
           <span className="text-lg">EcoBite</span>
         </a>
@@ -20,16 +20,7 @@ const Header = () => {
             Welcome
           </a>
           <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Map
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Chat
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Testimonials
-          </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Join Us
+            Logout
           </a>
         </nav>
         <button className="md:hidden" onClick={toggleSheet}>

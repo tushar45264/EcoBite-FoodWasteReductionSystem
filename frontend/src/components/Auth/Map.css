@@ -1,0 +1,10 @@
+/* Custom styles for the Geocoder control */
+.geocoder-control {
+    position: absolute;
+    top: 10px;
+    left: 22%;
+    transform: translateX(-50%);
+    z-index: 1; /* Ensure the control is above other map elements */
+    width: 300px; /* Adjust the width as needed */
+  }
+  

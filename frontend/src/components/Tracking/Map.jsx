@@ -3,22 +3,41 @@ import mapboxgl from 'mapbox-gl';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
+import Modal from './Model';
 import './Map.css'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg'; // Add your Mapbox token here
 
 const Map = () => {
+  
+  const [DonorLocation, setDonorLocation] = useState([0, 0]);
+  const [isModalDismissed, setIsModalDismissed] = useState(false);
+  const donation=localStorage.getItem('donation');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const donationId=JSON.parse(donation)?._id;
+  const DonorId=JSON.parse(donation)?.donor;
+  const GetDonorLocation=async()=>{
+    try{
+      const response = await axios.get(`http://localhost:5000/api/DonorLocation/${DonorId}`);
+      setDonorLocation(response.data.data.location.coordinates);
+      console.log();
+    } catch(e) {
+      console.log(e);
+    }
+  } 
+  
   const mapContainerRef = useRef(null);
-  const [receiverLocation, setReceiverLocation] = useState([-73.5, 41]); // Initial receiver location
+  const [receiverLocation, setReceiverLocation] = useState([-73.5, 41]); 
   const [map, setMap] = useState(null);
 
-  const origin = [85.3338, 23.3586]; // Replace with the sender's coordinates
+  const origin = DonorLocation; 
 
   useEffect(() => {
+    GetDonorLocation();
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [85.3338, 23.3586], // Initial map center (somewhere in the middle)
+      center: DonorLocation, 
       zoom: 9,
     });
 
@@ -96,6 +115,7 @@ const Map = () => {
 
     // Update the receiver's location and route every time it changes
     const updateReceiverLocation = (newLocation) => {
+      // console.log('Updating receiver location:', newLocation);
       receiverMarker.setLngLat(newLocation);
       getRoute(origin, newLocation);
     };
@@ -161,6 +181,9 @@ const Map = () => {
     distanceButton.onclick = () => {
       const distance = calculateDistance(origin, receiverLocation);
       alert(`Distance between sender and receiver: ${distance.toFixed(2)} km`);
+      if (distance < 0.1 && !isModalDismissed) {
+        setIsModalOpen(true);
+      }
     };
 
     const zoomInButton = document.createElement('button');
@@ -184,15 +207,31 @@ const Map = () => {
     buttonContainer.appendChild(zoomOutButton);
 
     map.getContainer().appendChild(buttonContainer);
+    const intervalId = setInterval(() => {
+      const distance = calculateDistance(origin, receiverLocation);
+      // console.log(`Distance between sender and receiver: ${distance.toFixed(2)} km`);
+      if (distance < 0.1 && !isModalDismissed) {
+        setIsModalOpen(true);
+      }
+    }, 30000);
 
+    
     return () => {
+      clearInterval(intervalId);
       if (map) {
         map.remove();
       }
     };
   }, [receiverLocation]);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsModalDismissed(true);
+  };
 
-  return <div className="h-screen relative" ref={mapContainerRef} />;
+  return <>
+    <div className="h-screen relative" ref={mapContainerRef} />;
+    <Modal isOpen={isModalOpen} onClose={closeModal} />
+  </> 
 };
 
 export default Map;
