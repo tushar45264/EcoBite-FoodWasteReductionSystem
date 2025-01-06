@@ -43,8 +43,8 @@ const MakeDonation = () => {
             let imageUrl = '';
 
             if (imageFile) {
-                const cloudName = 'dpaiv8jqy'; // replace with your Cloudinary cloud name
-                const uploadPreset = 'hgwj7soa'; // replace with your Cloudinary upload preset
+                const cloudName = process.env.cloudName 
+                const uploadPreset = process.env.uploadPreset;
 
                 const formData = new FormData();
                 formData.append('file', imageFile);

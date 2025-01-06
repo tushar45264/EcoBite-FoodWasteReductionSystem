@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MapSection = () => {
-  const mapboxToken = 'pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg'; // Replace with your Mapbox access token
+  const mapboxToken = process.env.mapBoxId
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
@@ -14,17 +14,16 @@ const MapSection = () => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [85.3338, 23.3586], // Initial map center (somewhere in the middle)
+      center: [85.3338, 23.3586], 
       zoom: 9,
     });
 
-    // Clean up
     return () => map.remove();
   }, [mapboxToken]);
 
   const { ref, inView } = useInView({
-    triggerOnce: true, // Animations will trigger only once
-    threshold: 0.1, // Trigger when 10% of the component is visible
+    triggerOnce: true,
+    threshold: 0.1, 
   });
 
   return (

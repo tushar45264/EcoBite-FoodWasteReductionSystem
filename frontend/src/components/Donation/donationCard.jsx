@@ -59,7 +59,6 @@ const FoodDonationCard = ({ donation }) => {
   };
 
   const handleConfirm = async() => {
-    // Save donation to localStorage
     localStorage.setItem('donation', JSON.stringify(donation));
     try {
       const response = await axios.post(`http://localhost:5000/api/match/${user.user._id}`, { donationId: donation._id });
@@ -67,11 +66,9 @@ const FoodDonationCard = ({ donation }) => {
     }catch(e){
       console.log(e.message);
     }
-    
-    // Close the modal
+
     setModalOpen(false);
     
-    // Navigate to the track page
     navigate(`/track`);
   };
 
