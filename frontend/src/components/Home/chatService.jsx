@@ -8,7 +8,7 @@ const ChatSection = () => {
     triggerOnce: true, 
     threshold: 0.1, 
   });
-
+//need to fix here
   return (
     <section id="chat" className="w-full flex justify-center py-12 md:py-24 lg:py-44">
       <motion.div
