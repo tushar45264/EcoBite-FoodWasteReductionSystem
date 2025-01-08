@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { LuLeaf, LuMenu } from 'react-icons/lu';
+import React, { useState } from "react";
+import { LuLeaf, LuMenu } from "react-icons/lu";
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -16,10 +16,16 @@ const Header = () => {
           <span className="text-lg">EcoBite</span>
         </a>
         <nav className="hidden gap-6 md:flex">
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
+          <a
+            href="#"
+            className="text-sm font-medium hover:underline underline-offset-4"
+          >
             Welcome
           </a>
-          <a href="#" className="text-sm font-medium hover:underline underline-offset-4">
+          <a
+            href="#"
+            className="text-sm font-medium hover:underline underline-offset-4"
+          >
             Logout
           </a>
         </nav>
@@ -30,19 +36,39 @@ const Header = () => {
         {isSheetOpen && (
           <div className="absolute right-0 top-16 w-64 bg-white shadow-md ">
             <div className="grid gap-6 p-6">
-              <a href="#" className="flex items-center gap-2 text-lg font-semibold" onClick={toggleSheet}>
+              <a
+                href="#"
+                className="flex items-center gap-2 text-lg font-semibold"
+                onClick={toggleSheet}
+              >
                 Welcome
               </a>
-              <a href="#" className="flex items-center gap-2 text-lg font-semibold" onClick={toggleSheet}>
+              <a
+                href="#"
+                className="flex items-center gap-2 text-lg font-semibold"
+                onClick={toggleSheet}
+              >
                 Map
               </a>
-              <a href="#" className="flex items-center gap-2 text-lg font-semibold" onClick={toggleSheet}>
+              <a
+                href="#"
+                className="flex items-center gap-2 text-lg font-semibold"
+                onClick={toggleSheet}
+              >
                 Chat
               </a>
-              <a href="#" className="flex items-center gap-2 text-lg font-semibold" onClick={toggleSheet}>
+              <a
+                href="#"
+                className="flex items-center gap-2 text-lg font-semibold"
+                onClick={toggleSheet}
+              >
                 Testimonials
               </a>
-              <a href="#" className="flex items-center gap-2 text-lg font-semibold" onClick={toggleSheet}>
+              <a
+                href="#"
+                className="flex items-center gap-2 text-lg font-semibold"
+                onClick={toggleSheet}
+              >
                 Join Us
               </a>
             </div>

@@ -4,7 +4,7 @@ import User from "../models/user.js";
 const authMiddleware = async(req, res, next) => {
 
     const {token} = req.cookies;
-    console.log(req.cookies);
+    // console.log(req.cookies);
     if(!token){
         return res.status(401).json({error: "Unauthorized"});
     }

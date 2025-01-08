@@ -1,54 +1,60 @@
-import React, { useRef, useEffect,useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import axios from 'axios';
-import Modal from './Model';
-import './Map.css'
+import React, { useRef, useEffect, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import "mapbox-gl/dist/mapbox-gl.css";
+import axios from "axios";
+import Modal from "./Model";
+import "./Map.css";
 
-mapboxgl.accessToken = process.env.mapBoxId;
+mapboxgl.accessToken = "pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg";
 
 const Map = () => {
-  
   const [DonorLocation, setDonorLocation] = useState([0, 0]);
   const [isModalDismissed, setIsModalDismissed] = useState(false);
-  const donation=localStorage.getItem('donation');
+  const donation = localStorage.getItem("donation");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const donationId=JSON.parse(donation)?._id;
-  const DonorId=JSON.parse(donation)?.donor;
-  const GetDonorLocation=async()=>{
-    try{
-      const response = await axios.get(`http://localhost:5000/api/DonorLocation/${DonorId}`);
+  const donationId = JSON.parse(donation)?._id;
+  const DonorId = JSON.parse(donation)?.donor;
+  const token = localStorage.getItem("token");
+
+  const GetDonorLocation = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/DonorLocation/${DonorId}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       setDonorLocation(response.data.data.location.coordinates);
-      console.log();
-    } catch(e) {
+      console.log(response.data);
+    } catch (e) {
       console.log(e);
     }
-  } 
-  
+  };
+
   const mapContainerRef = useRef(null);
-  const [receiverLocation, setReceiverLocation] = useState([-73.5, 41]); 
+  const [receiverLocation, setReceiverLocation] = useState([-73.5, 41]);
   const [map, setMap] = useState(null);
 
-  const origin = DonorLocation; 
+  const origin = DonorLocation;
 
   useEffect(() => {
     GetDonorLocation();
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: DonorLocation, 
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: DonorLocation,
       zoom: 9,
     });
 
     setMap(map);
 
-    new mapboxgl.Marker({ color: 'red' })
-      .setLngLat(origin)
-      .addTo(map);
+    new mapboxgl.Marker({ color: "red" }).setLngLat(origin).addTo(map);
 
-
-    const receiverMarker = new mapboxgl.Marker({ color: 'green' })
+    const receiverMarker = new mapboxgl.Marker({ color: "green" })
       .setLngLat(receiverLocation)
       .addTo(map);
 
@@ -60,32 +66,32 @@ const Map = () => {
 
         const route = data.geometry.coordinates;
         const geojson = {
-          type: 'Feature',
+          type: "Feature",
           properties: {},
           geometry: {
-            type: 'LineString',
+            type: "LineString",
             coordinates: route,
           },
         };
 
-        if (map.getSource('route')) {
-          map.getSource('route').setData(geojson);
+        if (map.getSource("route")) {
+          map.getSource("route").setData(geojson);
         } else {
-          map.addSource('route', {
-            type: 'geojson',
+          map.addSource("route", {
+            type: "geojson",
             data: geojson,
           });
           map.addLayer({
-            id: 'route',
-            type: 'line',
-            source: 'route',
+            id: "route",
+            type: "line",
+            source: "route",
             layout: {
-              'line-join': 'round',
-              'line-cap': 'round',
+              "line-join": "round",
+              "line-cap": "round",
             },
             paint: {
-              'line-color': '#0074d9',
-              'line-width': 5,
+              "line-color": "#0074d9",
+              "line-width": 5,
             },
           });
         }
@@ -97,19 +103,21 @@ const Map = () => {
         map.fitBounds(bounds, { padding: 50 });
       } catch (error) {
         if (error.response && error.response.status === 429 && retries > 0) {
-          setTimeout(() => {
-            getRoute(start, end, retries - 1);
-          }, 1000 * Math.pow(2, 3 - retries));
+          setTimeout(
+            () => {
+              getRoute(start, end, retries - 1);
+            },
+            1000 * Math.pow(2, 3 - retries),
+          );
         } else {
-          console.error('Error fetching route:', error);
+          console.error("Error fetching route:", error);
         }
       }
     };
 
-    map.on('load', () => {
+    map.on("load", () => {
       getRoute(origin, receiverLocation);
     });
-
     const updateReceiverLocation = (newLocation) => {
       // console.log('Updating receiver location:', newLocation);
       receiverMarker.setLngLat(newLocation);
@@ -124,7 +132,7 @@ const Map = () => {
     };
 
     const handleError = (error) => {
-      console.error('Error getting geolocation:', error);
+      console.error("Error getting geolocation:", error);
     };
 
     const geolocationOptions = {
@@ -134,17 +142,21 @@ const Map = () => {
     };
 
     const requestLocationPermission = () => {
-      if ('geolocation' in navigator) {
+      if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             handleSuccess(position);
-            navigator.geolocation.watchPosition(handleSuccess, handleError, geolocationOptions);
+            navigator.geolocation.watchPosition(
+              handleSuccess,
+              handleError,
+              geolocationOptions,
+            );
           },
           handleError,
-          geolocationOptions
+          geolocationOptions,
         );
       } else {
-        console.error('Geolocation is not supported by this browser.');
+        console.error("Geolocation is not supported by this browser.");
       }
     };
 
@@ -156,20 +168,24 @@ const Map = () => {
       const [lon2, lat2] = coord2;
 
       const R = 6371;
+
       const dLat = toRad(lat2 - lat1);
       const dLon = toRad(lon2 - lon1);
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        Math.cos(toRad(lat1)) *
+          Math.cos(toRad(lat2)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
 
-      return distance; 
+      return distance;
     };
 
-    const distanceButton = document.createElement('button');
-    distanceButton.textContent = 'Show Distance';
-    distanceButton.className = 'mapboxgl-ctrl mapboxgl-ctrl-group map-button';
+    const distanceButton = document.createElement("button");
+    distanceButton.textContent = "Show Distance";
+    distanceButton.className = "mapboxgl-ctrl mapboxgl-ctrl-group map-button";
     distanceButton.onclick = () => {
       const distance = calculateDistance(origin, receiverLocation);
       alert(`Distance between sender and receiver: ${distance.toFixed(2)} km`);
@@ -178,22 +194,22 @@ const Map = () => {
       }
     };
 
-    const zoomInButton = document.createElement('button');
-    zoomInButton.textContent = '+';
-    zoomInButton.className = 'mapboxgl-ctrl mapboxgl-ctrl-group map-button';
+    const zoomInButton = document.createElement("button");
+    zoomInButton.textContent = "+";
+    zoomInButton.className = "mapboxgl-ctrl mapboxgl-ctrl-group map-button";
     zoomInButton.onclick = () => {
       map.zoomIn();
     };
 
-    const zoomOutButton = document.createElement('button');
-    zoomOutButton.textContent = '-';
-    zoomOutButton.className = 'mapboxgl-ctrl mapboxgl-ctrl-group map-button';
+    const zoomOutButton = document.createElement("button");
+    zoomOutButton.textContent = "-";
+    zoomOutButton.className = "mapboxgl-ctrl mapboxgl-ctrl-group map-button";
     zoomOutButton.onclick = () => {
       map.zoomOut();
     };
 
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'map-buttons-container';
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "map-buttons-container";
     buttonContainer.appendChild(distanceButton);
     buttonContainer.appendChild(zoomInButton);
     buttonContainer.appendChild(zoomOutButton);
@@ -207,7 +223,6 @@ const Map = () => {
       }
     }, 30000);
 
-    
     return () => {
       clearInterval(intervalId);
       if (map) {
@@ -220,10 +235,12 @@ const Map = () => {
     setIsModalDismissed(true);
   };
 
-  return <>
-    <div className="h-screen relative" ref={mapContainerRef} />;
-    <Modal isOpen={isModalOpen} onClose={closeModal} />
-  </> 
+  return (
+    <>
+      <div className="h-screen relative" ref={mapContainerRef} />;
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
+    </>
+  );
 };
 
 export default Map;

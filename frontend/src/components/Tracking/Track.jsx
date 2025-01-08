@@ -1,16 +1,14 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Content from './content'
-import Header from '../Home/Header'
-import FoodCard from './FoodCard'
+import React from "react";
+import Content from "./content";
+import Header from "../Home/Header";
 
 const Track = () => {
   return (
     <>
-       <Header />
-       <Content /> 
+      <Header />
+      <Content />
     </>
-  )
-}
+  );
+};
 
-export default Track
+export default Track;

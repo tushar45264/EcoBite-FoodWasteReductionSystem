@@ -3,29 +3,39 @@ import Donation from "../models/donation.js";
 import User from "../models/user.js";
 
 export const createMatch = async(req,res)=>{
-    const { donationId }=req.body;
-    const userId=req.params.id;
+    const { donationId,donorId } = req.body;
+        const userId = req.user._id;
+        console.log('userId', userId);
+        console.log('donationId', donationId);
 
-    try {
-        const us=await User.findById("6672ab7a7d3870a69a2d2f81");
-        // console.log("user:",us._id)
-        const donation =await Donation.findById(donationId);
-        if(!donation || donation.status !=='available') {
-            return res.status(400).json({ success: false, error: "Donation not available" });
-        }  
-        if(us.role==='donor'){
-            return res.status(400).json({success:false,error:"Donation only available for Recepients"})
-        } donation.status = 'claimed';
-        await donation.save();
-        console.log(us._id)
-        const match = await Match.create({
-            donation: donationId,
-            recipient: us._id
-        }) 
-        res.status(200).json({ success: true,data: match });
-    } catch(error){
-        res.status(400).json({ success: false, error: error.message });
-    }
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ success: false, error: "User not found" });
+            }
+
+            const donation = await Donation.findById(donationId);
+            if (!donation || donation.status !== 'available') {
+                return res.status(400).json({ success: false, error: "Donation not available" });
+            }
+
+            if (user.role === 'donor') {
+                return res.status(400).json({ success: false, error: "Donation only available for Recipients" });
+            }
+
+            donation.status = 'claimed';
+            await donation.save();
+
+            const match = await Match.create({
+                donation: donationId,
+                recipient: user._id,
+                donor: donorId
+            });
+
+            res.status(200).json({ success: true, data: match });
+        } catch (error) {
+            res.status(400).json({ success: false, error: error.message });
+        }
 }
 
 export const GetMatch = async(req,res)=>{
@@ -51,3 +61,13 @@ export const DeleteMatch = async (req, res) => {
       res.status(400).json({ success: false, error: error.message });
     }
   };
+
+  export const GetMatchByDonationId= async (req, res) => {
+       const {id}=req.params;
+       try{
+            const response =await Match.find({donation:id});
+            res.status(200).json({success:true,data:response});
+       } catch(error){
+           res.status(400).json({ success: false, error: error.message });
+       }
+  }

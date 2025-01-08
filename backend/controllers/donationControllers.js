@@ -80,16 +80,16 @@ export const UpdateDonation = async (req, res) => {
 
 export const DeleteDonation = async (req, res) => {
     const { id } = req.params;
-    console.log(id)
+    // console.log(id)
 
     try {
         const donation = await Donation.findById(id);
-        console.log(donation)
+        
 
         if (!donation) {
             return res.status(404).json({ success: false, error: 'Donation not found' });
         }
-
+        console.log(donation)
         // if (donation.donor.toString() !== req.user._id.toString()) {
         //     return res.status(403).json({ success: false, error: 'Unauthorized to delete this donation' });
         // }

@@ -1,54 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import './Map.css'; 
+import React, { useEffect, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import "./Map.css";
 
 const MapComponent = ({ onLocationChange }) => {
   const [marker, setMarker] = useState(null);
-
+  console.log("process.env", process.env.MAPBOX_TOKEN);
   useEffect(() => {
-    mapboxgl.accessToken = process.env.mapBoxId;
-    console.log('Initializing map...');
+    mapboxgl.accessToken = "pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg";
+    console.log("Initializing map...");
 
     const map = new mapboxgl.Map({
-      container: 'map-container',
-      style: 'mapbox://styles/mapbox/outdoors-v12',
+      container: "map-container",
+      style: "mapbox://styles/mapbox/outdoors-v12",
       center: [23.2323, 83.323],
       zoom: 12,
     });
 
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-    console.log('Navigation control added.');
+    map.addControl(new mapboxgl.NavigationControl(), "top-right");
+    console.log("Navigation control added.");
 
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
     });
 
-    map.addControl(geocoder, 'top-left');
-    console.log('Geocoder control added.');
+    map.addControl(geocoder, "top-left");
+    console.log("Geocoder control added.");
 
-    geocoder.on('result', (event) => {
+    geocoder.on("result", (event) => {
       const { result } = event;
       const [lng, lat] = result.center;
-      console.log('Geocoder result:', { lng, lat });
+      console.log("Geocoder result:", { lng, lat });
 
       updateMarkerPosition([lng, lat]);
-      onLocationChange({lng, lat});
-      
-    //   localStorage.setItem('searchedLocation', JSON.stringify({ lng, lat }));
+      onLocationChange({ lng, lat });
+
+      //   localStorage.setItem('searchedLocation', JSON.stringify({ lng, lat }));
     });
 
-    map.on('click', (event) => {
+    map.on("click", (event) => {
       const { lng, lat } = event.lngLat;
-      console.log('Map clicked at:', { lng, lat });
+      console.log("Map clicked at:", { lng, lat });
 
       updateMarkerPosition([lng, lat]);
-      onLocationChange({lng, lat});
-      
-    //   localStorage.setItem('clickedLocation', JSON.stringify({ lng, lat }));
+      onLocationChange({ lng, lat });
+
+      //   localStorage.setItem('clickedLocation', JSON.stringify({ lng, lat }));
     });
 
     const updateMarkerPosition = (lngLat) => {
@@ -61,7 +61,7 @@ const MapComponent = ({ onLocationChange }) => {
     };
 
     return () => {
-      console.log('Cleaning up map instance...');
+      console.log("Cleaning up map instance...");
       map.remove();
     };
   }, [marker]);
