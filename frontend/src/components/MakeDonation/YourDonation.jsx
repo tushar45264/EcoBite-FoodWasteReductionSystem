@@ -13,7 +13,7 @@ const YourDonations = () => {
     const fetchDonations = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/previousDonation/${id}`,
+          `https://ecobite-foodwastereductionsystem.onrender.com/api/previousDonation/${id}`,
           {
             withCredentials: true,
             headers: {

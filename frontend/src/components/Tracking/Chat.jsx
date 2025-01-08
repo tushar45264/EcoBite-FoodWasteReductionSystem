@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://ecobite-foodwastereductionsystem.onrender.com");
 
 const Chat = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +37,7 @@ const Chat = () => {
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/chat/${matchId}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/chat/${matchId}`,
         {
           withCredentials: true,
           headers: {
@@ -69,7 +69,7 @@ const Chat = () => {
       };
       try {
         await axios.post(
-          `http://localhost:5000/api/chat/${matchId}`,
+          `https://ecobite-foodwastereductionsystem.onrender.com/api/chat/${matchId}`,
           {
             sender: user.name,
             message,

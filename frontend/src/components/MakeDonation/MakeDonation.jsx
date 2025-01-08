@@ -63,7 +63,7 @@ const MakeDonation = () => {
       };
 
       const response = await axios.post(
-        `http://localhost:5000/api/donate/${id}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/donate/${id}`,
         donationData,
         {
           withCredentials: true,

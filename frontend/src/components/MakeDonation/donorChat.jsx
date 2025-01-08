@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://ecobite-foodwastereductionsystem.onrender.com");
 
 const DonorChat = ({ cardKey }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ const DonorChat = ({ cardKey }) => {
   const fetchMatchId = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/matches/${cardKey}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/matches/${cardKey}`,
         {
           withCredentials: true,
           headers: {
@@ -64,7 +64,7 @@ const DonorChat = ({ cardKey }) => {
   const fetchMessages = async (matchId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/chat/${matchId}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/chat/${matchId}`,
         {
           withCredentials: true,
           headers: {
@@ -98,7 +98,7 @@ const DonorChat = ({ cardKey }) => {
       setMessage("");
       try {
         await axios.post(
-          `http://localhost:5000/api/chat/${matchId}`,
+          `https://ecobite-foodwastereductionsystem.onrender.com/api/chat/${matchId}`,
           {
             sender: user.name,
             message,
