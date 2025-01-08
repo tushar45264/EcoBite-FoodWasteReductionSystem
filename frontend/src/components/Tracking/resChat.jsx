@@ -28,7 +28,7 @@ const Chat = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/chat/${room}`,
+          `https://ecobite-foodwastereductionsystem.onrender.com/api/chat/${room}`,
         );
         setMessages(response.data);
       } catch (error) {

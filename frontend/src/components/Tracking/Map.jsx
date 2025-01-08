@@ -20,7 +20,7 @@ const Map = () => {
   const GetDonorLocation = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/DonorLocation/${DonorId}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/DonorLocation/${DonorId}`,
         {
           withCredentials: true,
           headers: {

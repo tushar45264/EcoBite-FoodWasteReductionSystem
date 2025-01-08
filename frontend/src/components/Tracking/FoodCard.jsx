@@ -22,7 +22,7 @@ const FoodCard = ({ isClick }) => {
       console.log("Attempting to delete donation with ID:", donation._id);
 
       const response = await axios.delete(
-        `http://localhost:5000/api/donations/${donation._id}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/donations/${donation._id}`,
         {
           withCredentials: true,
           headers: {

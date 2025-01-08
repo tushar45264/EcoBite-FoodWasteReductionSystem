@@ -12,7 +12,7 @@ const Content = () => {
   const handleCancel = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/donations/${donation._id}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/donations/${donation._id}`,
         { status: "available" },
         {
           withCredentials: true,
@@ -24,7 +24,7 @@ const Content = () => {
       );
 
       const result = await axios.delete(
-        `http://localhost:5000/api/matches/${donation._id}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/matches/${donation._id}`,
         {
           withCredentials: true,
           headers: {

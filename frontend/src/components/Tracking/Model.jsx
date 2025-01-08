@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose }) => {
     const donation = JSON.parse(localStorage.getItem("donation"))._id;
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/donations/${donation}`,
+        `https://ecobite-foodwastereductionsystem.onrender.com/api/donations/${donation}`,
         { status: "picked_up" },
         {
           withCredentials: true,

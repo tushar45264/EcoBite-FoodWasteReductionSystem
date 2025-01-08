@@ -14,7 +14,7 @@ const Header = () => {
   const handleSubmit = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/logout",
+        "https://ecobite-foodwastereductionsystem.onrender.com/api/logout",
         {},
         {
           withCredentials: true,
