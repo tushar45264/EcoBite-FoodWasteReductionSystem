@@ -1,5 +1,5 @@
-import React from 'react';
-import DonorChat from './donorChat';
+import React from "react";
+import DonorChat from "./donorChat";
 
 const Badge = ({ variant, children }) => {
   const baseStyle = "px-3 py-1 text-sm rounded-full";
@@ -9,14 +9,20 @@ const Badge = ({ variant, children }) => {
   };
 
   return (
-    <span className={`${baseStyle} ${variants[variant]}`}>
-      {children}
-    </span>
+    <span className={`${baseStyle} ${variants[variant]}`}>{children}</span>
   );
 };
 
-const FoodCard = ({ cardKey, title, address, quantity, status, image, handleDelete }) => {
-  const isAvailable = status === 'available';
+const FoodCard = ({
+  cardKey,
+  title,
+  address,
+  quantity,
+  status,
+  image,
+  handleDelete,
+}) => {
+  const isAvailable = status === "available";
   return (
     <div className="shadow-md w-full max-w-md grid grid-cols-2 rounded-xl overflow-hidden">
       <div className="aspect-square bg-gray-200 overflow-hidden">
@@ -37,7 +43,7 @@ const FoodCard = ({ cardKey, title, address, quantity, status, image, handleDele
         </div>
         <div className="flex items-center justify-between">
           {/* <button className=' bg-green-400 rounded px-2 py-1 mt-2' variant={isAvailable ? "success" : "success"}> */}
-            {isAvailable ? "Available" : <DonorChat cardKey={cardKey} />}
+          {isAvailable ? "Available" : <DonorChat cardKey={cardKey} />}
           {/* </button> */}
           <button
             onClick={handleDelete}

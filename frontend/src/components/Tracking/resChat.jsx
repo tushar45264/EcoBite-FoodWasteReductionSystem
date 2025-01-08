@@ -1,36 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
+import axios from "axios";
 
-const socket = io('http://localhost:3001');
+const socket = io("http://localhost:3001");
 
 const Chat = () => {
-  const [room, setRoom] = useState('');
-  const [message, setMessage] = useState('');
+  const [room, setRoom] = useState("");
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [joinedRoom, setJoinedRoom] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
-    socket.on('receive_message', (data) => {
+    socket.on("receive_message", (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
     });
 
     return () => {
-      socket.off('receive_message');
+      socket.off("receive_message");
     };
   }, []);
 
   const joinRoom = async () => {
     if (room && username) {
-      socket.emit('join_room', { room, username });
+      socket.emit("join_room", { room, username });
       setJoinedRoom(true);
 
       try {
-        const response = await axios.get(`http://localhost:5000/api/chat/${room}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/chat/${room}`,
+        );
         setMessages(response.data);
       } catch (error) {
-        console.error('Failed to fetch messages:', error);
+        console.error("Failed to fetch messages:", error);
       }
     }
   };
@@ -42,9 +44,9 @@ const Chat = () => {
         sender: username,
         message,
       };
-      socket.emit('send_message', messageData);
+      socket.emit("send_message", messageData);
       setMessages((prevMessages) => [...prevMessages, messageData]);
-      setMessage('');
+      setMessage("");
     }
   };
 
@@ -88,7 +90,7 @@ const Chat = () => {
             className="mb-2 p-2 border rounded w-full"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded"

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import MapComponent from './MapComponent';
-import { LuMapPin } from 'react-icons/lu';
+import React, { useState } from "react";
+import MapComponent from "./MapComponent";
+import { LuMapPin } from "react-icons/lu";
 
 const Modal = ({ onSaveLocation }) => {
   const [location, setLocation] = useState({ lng: null, lat: null });
@@ -11,7 +11,7 @@ const Modal = ({ onSaveLocation }) => {
   };
 
   const saveLocation = () => {
-    console.log('Location saved:', location);
+    console.log("Location saved:", location);
     onSaveLocation(location);
     setShowModal(false);
   };

@@ -1,13 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Card = ({ children, className }) => {
-  return (
-    <div className={`rounded-lg shadow-md ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`rounded-lg shadow-md ${className}`}>{children}</div>;
 };
 
 const TestimonialsSection = () => {
@@ -26,9 +22,12 @@ const TestimonialsSection = () => {
       >
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">What Our Users Say</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              What Our Users Say
+            </h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Hear from our satisfied customers about their experience with our chat service.
+              Hear from our satisfied customers about their experience with our
+              chat service.
             </p>
           </div>
         </div>
@@ -36,7 +35,11 @@ const TestimonialsSection = () => {
           className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12"
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6, delayChildren: 0.3, staggerChildren: 0.3 }}
+          transition={{
+            duration: 0.6,
+            delayChildren: 0.3,
+            staggerChildren: 0.3,
+          }}
         >
           <motion.div
             className="flex flex-col justify-center space-y-4"
@@ -53,8 +56,9 @@ const TestimonialsSection = () => {
                   <div className="font-bold">Jane Doe</div>
                   <div>
                     <p>
-                      "The chat service has been a game-changer for our customer support. The real-time messaging
-                      and file sharing features have helped us resolve issues quickly and efficiently."
+                      "The chat service has been a game-changer for our customer
+                      support. The real-time messaging and file sharing features
+                      have helped us resolve issues quickly and efficiently."
                     </p>
                   </div>
                 </div>
@@ -69,8 +73,10 @@ const TestimonialsSection = () => {
                   <div className="font-bold">John Smith</div>
                   <div>
                     <p>
-                      "I'm really impressed with the customer support provided through the chat service. The team
-                      is knowledgeable, responsive, and always willing to go the extra mile to help."
+                      "I'm really impressed with the customer support provided
+                      through the chat service. The team is knowledgeable,
+                      responsive, and always willing to go the extra mile to
+                      help."
                     </p>
                   </div>
                 </div>
@@ -92,8 +98,9 @@ const TestimonialsSection = () => {
                   <div className="font-bold">Sarah Lee</div>
                   <div>
                     <p>
-                      "The chat service has been a game-changer for our customer support. The real-time messaging
-                      and file sharing features have helped us resolve issues quickly and efficiently."
+                      "The chat service has been a game-changer for our customer
+                      support. The real-time messaging and file sharing features
+                      have helped us resolve issues quickly and efficiently."
                     </p>
                   </div>
                 </div>
@@ -108,8 +115,10 @@ const TestimonialsSection = () => {
                   <div className="font-bold">Tom Wilson</div>
                   <div>
                     <p>
-                      "I'm really impressed with the customer support provided through the chat service. The team
-                      is knowledgeable, responsive, and always willing to go the extra mile to help."
+                      "I'm really impressed with the customer support provided
+                      through the chat service. The team is knowledgeable,
+                      responsive, and always willing to go the extra mile to
+                      help."
                     </p>
                   </div>
                 </div>

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { LuLeaf, LuMenu } from 'react-icons/lu';
+import React, { useState } from "react";
+import { LuLeaf, LuMenu } from "react-icons/lu";
 
 const Header = () => {
-
+  console.log("process.env", process.env.MAPBOX_TOKEN);
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
