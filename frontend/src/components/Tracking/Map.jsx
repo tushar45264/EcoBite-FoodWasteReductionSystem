@@ -6,8 +6,7 @@ import axios from "axios";
 import Modal from "./Model";
 import "./Map.css";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg";
+mapboxgl.accessToken = "pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg";
 
 const Map = () => {
   const [DonorLocation, setDonorLocation] = useState([0, 0]);

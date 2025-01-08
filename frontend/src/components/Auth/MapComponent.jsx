@@ -9,8 +9,7 @@ const MapComponent = ({ onLocationChange }) => {
   const [marker, setMarker] = useState(null);
   console.log("process.env", process.env.MAPBOX_TOKEN);
   useEffect(() => {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg";
+    mapboxgl.accessToken = "pk.eyJ1IjoidHVzaGFyNDUiLCJhIjoiY2xtOWpoZnN1MGtzbDNwbzVnZHU2dzlhcCJ9.ajMoNWOXT4hbizwr9nvxUg";
     console.log("Initializing map...");
 
     const map = new mapboxgl.Map({
