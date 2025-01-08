@@ -15,6 +15,7 @@ const Login = () => {
     event.preventDefault();
     try {
       const response = await fetch('http://localhost:5000/api/login', {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,7 +25,7 @@ const Login = () => {
 
       if (response.ok) {
         const user = await response.json();
-        console.log(user.data.user.role)
+        localStorage.setItem('token', user.data.token);
         localStorage.setItem('user', JSON.stringify(user.data.user));
         
         dispatch(login(user.data.user));

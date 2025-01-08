@@ -57,21 +57,27 @@ const FoodDonationCard = ({ donation }) => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-
+  const token = localStorage.getItem('token');
   const handleConfirm = async() => {
-    // Save donation to localStorage
+    
     localStorage.setItem('donation', JSON.stringify(donation));
     try {
-      const response = await axios.post(`http://localhost:5000/api/match/${user.user._id}`, { donationId: donation._id });
-      console.log(response.data);
+      const response = await axios.post(`http://localhost:5000/api/match/${user.user._id}`
+        , { donationId: donation._id,
+            donorId: donation.donor
+         },
+        { withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      localStorage.setItem('match', JSON.stringify(response.data));
     }catch(e){
       console.log(e.message);
     }
     
-    // Close the modal
     setModalOpen(false);
     
-    // Navigate to the track page
     navigate(`/track`);
   };
 

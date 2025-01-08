@@ -14,7 +14,7 @@ const MapSection = () => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [85.3338, 23.3586], // Initial map center (somewhere in the middle)
+      center: [85.3338, 23.3586], 
       zoom: 9,
     });
 
@@ -23,8 +23,8 @@ const MapSection = () => {
   }, [mapboxToken]);
 
   const { ref, inView } = useInView({
-    triggerOnce: true, // Animations will trigger only once
-    threshold: 0.1, // Trigger when 10% of the component is visible
+    triggerOnce: true, 
+    threshold: 0.1, 
   });
 
   return (

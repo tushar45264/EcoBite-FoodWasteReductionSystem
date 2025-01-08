@@ -7,21 +7,45 @@ import axios from 'axios';
 const Content = () => {
   const navigate = useNavigate();
   const donation=JSON.parse(localStorage.getItem('donation'));
-  const handleCancel=async()=>{
-    try {
-      const response=await axios.put(`http://localhost:5000/api/donations/${donation._id}`,{status:'available'})
-      const result =await axios.delete(`http://localhost:5000/api/matches/${donation._id}`)
-      if(response.ok){
-          console.log('success')
-      } if(result.ok){
-        console.log('result updated')
+  const token = localStorage.getItem('token');
+
+const handleCancel = async () => {
+  try {
+    const response = await axios.put(
+      `http://localhost:5000/api/donations/${donation._id}`,
+      { status: 'available' },
+      {  withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          credentials: 'include'
+        }
       }
-    } catch(e){
-      console.log(e);
+    );
+
+    const result = await axios.delete(
+      `http://localhost:5000/api/matches/${donation._id}`,
+      {  withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          credentials: 'include'
+        }
+      }
+    );
+
+    if (response.status === 200) {
+      console.log('success');
     }
-    localStorage.removeItem('donation');
-    navigate('/alldonation')
+
+    if (result.status === 200) {
+      console.log('result updated');
+    }
+  } catch (e) {
+    console.log(e);
   }
+
+  localStorage.removeItem('donation');
+  navigate('/alldonation');
+};
   return (
     <>
         <div className="flex">

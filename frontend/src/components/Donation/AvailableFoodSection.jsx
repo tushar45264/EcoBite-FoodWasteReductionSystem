@@ -6,7 +6,7 @@ const AvailableFoodSection = () => {
     <>
     <section className="relative w-full h-[80vh] flex items-center justify-center mb-8 shadow-lg">
       <img
-        src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://images.unsplash.com/photo-1498579809087-ef1e558fd1da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="Available Food"
         className="absolute inset-0 w-full h-full object-cover object-center"
       />

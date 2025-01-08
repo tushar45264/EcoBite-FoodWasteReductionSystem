@@ -17,11 +17,13 @@ const HeroSection = () => {
             </p>
           </div>
           <div className="flex flex-col gap-8 min-[400px]:flex-row justify-center">
+          <Link to='/dashboard'>
             <button
               className="inline-flex h-10 text-white font-semibold items-center justify-center rounded-md bg-green-500 px-8 text-sm  text-primary-foreground shadow transition-colors hover:bg-green-500/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
               Dashboard
             </button>
+            </Link>
             <Link to='/makedonation'>
             <button
               className="inline-flex h-10 text-white items-center font-semibold justify-center rounded-md bg-green-500 px-8 text-sm  text-primary-foreground shadow transition-colors hover:bg-green-500/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"

@@ -14,7 +14,7 @@ export const Register = async (req, res) => {
                 coordinates: location.coordinates
             }
         });
-        const token = await generateToken(user._id,res);
+        const token = generateToken(user._id, res);
         return res.status(201).json({ success: true, data: { user, token } });
     } catch (err) {
         if (err.code === 11000) {
@@ -30,7 +30,8 @@ export const Login = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (user && (await user.matchPassword(password))) {
-            const token = await generateToken(user._id,res);
+            const token = generateToken(user._id,res);
+            // console.log(token)
           return  res.status(200).json({ success: true, data: { user, token } });
         } else {
           return  res.status(400).json({ success: false, error: "Invalid credentials" });
@@ -46,6 +47,7 @@ export const Logout = async (req, res) => {
         res.clearCookie("token");
         res.status(200).json({ message: "Logged Out" });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: "Server Error" });
     }
 };

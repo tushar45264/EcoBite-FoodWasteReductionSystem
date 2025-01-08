@@ -7,19 +7,27 @@ const YourDonations = () => {
     const id = user.user._id;
 
     const [donations, setDonations] = useState([]);
+    const token = localStorage.getItem('token');
 
-    useEffect(() => {
-        const fetchDonations = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/api/previousDonation/${id}`);
-                setDonations(response.data.data);  
-            } catch (error) {
-                console.error('Error fetching donations:', error);
-            }
-        };
+useEffect(() => {
+  const fetchDonations = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/previousDonation/${id}`,
+        {  withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+      setDonations(response.data.data);
+    } catch (error) {
+      console.error('Error fetching donations:', error);
+    }
+  };
 
-        fetchDonations();
-    }, [id]);
+  fetchDonations();
+}, [id]);
 
     return (
         <section className="py-12 md:py-20">

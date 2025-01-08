@@ -55,6 +55,7 @@ const SignUpForm = () => {
     };
     try {
       const response = await fetch('http://localhost:5000/api/Register', {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,6 +65,7 @@ const SignUpForm = () => {
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem('token', data.data.token);
         localStorage.setItem('user', JSON.stringify(data.data.user));
         dispatch(signup(data.data.user));
         navigate('/donate');

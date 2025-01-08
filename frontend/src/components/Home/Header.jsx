@@ -3,18 +3,33 @@ import { LuLeaf, LuMenu } from 'react-icons/lu';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../Redux/userSlice';
 import { useNavigate,Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Header = () => {
   const navigate=useNavigate();
-  const dispatch = useDispatch();;
+  const dispatch = useDispatch();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const user=useSelector(state=>state.user);
-  const handleSubmit=()=>{
-    localStorage.removeItem('user');
-    localStorage.removeItem('donation');
-    dispatch(logout(user));
-    navigate('/');
-  }
+  const token = localStorage.getItem('token');
+  const handleSubmit = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/logout', {}, {
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      localStorage.removeItem('donation');
+
+      dispatch(logout());
+      navigate('/');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
 
   const toggleSheet = () => {
     setIsSheetOpen(!isSheetOpen);

@@ -5,22 +5,32 @@ import { useNavigate } from 'react-router-dom';
 const Modal = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     if (!isOpen) return null;
-  
-  const handleOrder = async () => {
-    const donation = JSON.parse(localStorage.getItem('donation'))._id;
-    try {
-      const response = await axios.put(`http://localhost:5000/api/donations/${donation}`, { status: "picked_up" });
-      if(response.ok){
-        localStorage.removeItem('donation');
-        navigate('/alldonation')
-        onClose();
-      }
-      
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    const token = localStorage.getItem('token');
 
+    const handleOrder = async () => {
+      const donation = JSON.parse(localStorage.getItem('donation'))._id;
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/api/donations/${donation}`,
+          { status: 'picked_up' },
+          {  withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+              credentials: 'include'
+            }
+          }
+        );
+    
+        if (response.status === 200) { 
+          localStorage.removeItem('donation');
+          navigate('/alldonation');
+          onClose();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 shadow-lg">

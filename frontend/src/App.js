@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Home from './components/Home/Home';
 import Track from './components/Tracking/Track';
@@ -6,10 +6,13 @@ import SignUpForm from './components/Auth/signup';
 import Login from './components/Auth/login';
 import Donation from './components/MakeDonation/Donation';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AllDonation from './components/Donation/AllDonation';
 import MakeDonation from './components/MakeDonation/MakeDonation';
 import Dashboard from './components/MakeDonation/Dashboard';
+// import Chat from './components/Tracking/resChat';
+
+
 function App() {
   const selector = useSelector(state=>state.user);
     // console.log(selector)

@@ -10,36 +10,54 @@ const TabNavigation = () => {
   const id = user.user._id;
 
   const [donations, setDonations] = useState([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchDonations = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/previousDonation/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/previousDonation/${id}`,
+          {  withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+              credentials: 'include'
+            }
+          }
+        ); 
         setDonations(response.data.data);
       } catch (error) {
         console.error('Error fetching donations:', error);
       }
     };
-
+  
     fetchDonations();
   }, [id]);
-
+  
   const handleDelete = async (donationId) => {
-    console.log(donationId)
+    console.log(donationId);
     try {
-      await axios.delete(`http://localhost:5000/api/donations/${donationId}`);
+      await axios.delete(
+        `http://localhost:5000/api/donations/${donationId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            credentials: 'include'
+          }
+        }
+      );
       setDonations(donations.filter(donation => donation._id !== donationId));
     } catch (error) {
       console.error('Error deleting donation:', error);
     }
   };
-
+  
   const renderContent = () => {
     return donations
       .filter(donation => donation.status === activeTab)
       .map(donation => (
         <FoodCard
           key={donation._id}
+          cardKey={donation._id}
           title={donation.foodType}
           address={donation.pickupLocation}
           quantity={donation.quantity}

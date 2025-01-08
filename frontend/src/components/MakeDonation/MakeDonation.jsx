@@ -34,11 +34,11 @@ const MakeDonation = () => {
         const file = e.target.files[0];
         setImageFile(file);
     };
-
+    const token=localStorage.getItem('token');
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
-
+        
         try {
             let imageUrl = '';
 
@@ -60,8 +60,10 @@ const MakeDonation = () => {
             };
 
             const response = await axios.post(`http://localhost:5000/api/donate/${id}`, donationData, {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
