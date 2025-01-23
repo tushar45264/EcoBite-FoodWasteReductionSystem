@@ -16,7 +16,7 @@ dotenv.config();
 const Port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'https://eco-bite-food-waste-reduction-system-7eyc2io9o.vercel.app',
+  origin: 'https://eco-bite-food-waste-reduction-system.vercel.app',
   credentials: true
 }));
 app.use(express.json());
